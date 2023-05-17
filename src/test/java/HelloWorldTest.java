@@ -12,6 +12,6 @@ response.prettyPrint();
     }
     @Test
     public void testEx(){
-            System.out.println("Hello from Рустем");
+            System.out.println("Hello from Рустем.");
         }
     }
