@@ -36,4 +36,30 @@ public class HomeWork {
         Header headerLocationValue = response.getHeaders().get("Location");
         System.out.println(headerLocationValue);
     }
+    @Test
+    public void HomeWorkSeven(){
+        Response response =
+                given().
+                        contentType(ContentType.URLENC).
+                        redirects().follow(false).
+                        when()
+                        .get("https://playground.learnqa.ru/api/long_redirect");
+        String headerLocationValus = response.getHeader("Location");
+        int statusCode = response.getStatusCode();
+        System.out.println(statusCode);
+        System.out.println(headerLocationValus);
+
+        for(; statusCode != 200 ;) {
+            Response responseTwo =
+                    given().
+                            contentType(ContentType.URLENC).
+                            redirects().follow(false).
+                            when()
+                            .get(headerLocationValus);
+            headerLocationValus = responseTwo.getHeader("location");
+            statusCode = responseTwo.getStatusCode();
+            System.out.println(statusCode);
+            System.out.println(headerLocationValus);
+        }
+    }
 }
