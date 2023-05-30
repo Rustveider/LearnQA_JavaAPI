@@ -5,9 +5,10 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
-import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 
 public class HomeWork {
@@ -62,4 +63,40 @@ public class HomeWork {
             System.out.println(headerLocationValus);
         }
     }
+    @Test
+    public void HomeWorkEight() throws InterruptedException {
+        JsonPath responseForToken = RestAssured
+                .given()
+                .when()
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .jsonPath();
+               String answer = responseForToken.get("token");
+        //     System.out.println(answer);
+        int time = responseForToken.get("seconds");
+        Map<String, String> headers = new HashMap<>();
+        headers.put("token", answer);
+
+        JsonPath responseStatusJob = RestAssured
+                .given()
+                .params(headers)
+                .when()
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .jsonPath();
+
+        String status = responseStatusJob.get("status");
+      //  System.out.println(status);
+        String statusJob = "Job is NOT ready";
+        for(;status.equalsIgnoreCase(statusJob);){
+            Thread.sleep((time * 1000));
+            JsonPath responseResultJob = RestAssured
+                    .given()
+                    .params(headers)
+                    .when()
+                    .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                    .jsonPath();
+            responseResultJob.prettyPrint();
+            status = responseResultJob.get("status");
+        }
+    }
 }
+
