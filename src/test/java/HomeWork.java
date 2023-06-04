@@ -100,9 +100,9 @@ public class HomeWork {
     }
     @Test
     public void HomeWorkNine() throws InterruptedException {
-        String[] seasons  = new String[] {"password ", "123456", "12345678", "qwerty", "abc123", "monkey", "1234567", "letmein", "trustno1", "dragon", "baseball",
+        String[] seasons  = new String[] {"password", "123456", "12345678", "welcome", "qwerty", "abc123", "monkey", "1234567", "letmein", "trustno1", "dragon", "baseball",
                 "111111", "iloveyou", "master", "sunshine", "ashley", "bailey", "passw0rd", "shadow", "123123", "654321", "superman", "qazwsx", "michael", "Football",
-        "123456789", "12345", "123456789", "111111", "1234", "1234567890", "princess", "football", "adobe123", "welcome", "login", "admin",
+        "123456789", "12345", "123456789", "111111", "1234", "1234567890", "princess", "football", "adobe123", "login", "admin",
                 "qwerty123", "solo", "1q2w3e4r", "666666", "photoshop", "1qaz2wsx", "qwertyuiop", "mustang", "121212", "starwars", "access", "flower", "555555",
                 "lovely", "7777777", "michael", "!@#$%^&*", "jesus", "password1", "hello", "charlie", "888888", "696969", "qwertyuiop", "hottie", "freedom",
                 "aa123456", "ninja", "azerty", "solo", "loveme", "whatever", "donald", "batman", "zaq1zaq1", "password1", "000000", "qwerty123", "123qwe"};
@@ -119,12 +119,11 @@ public class HomeWork {
                     .andReturn();
 
             String cookie = getAuthCookie.getCookie("auth_cookie");
-            System.out.println(seasons[i]);
 
             String checkAuthCookie = given()
-                    .headers("auth_cookie", cookie)
+                    .cookies("auth_cookie", cookie)
                     .when()
-                    .post("https://playground.learnqa.ru/ajax/api/check_auth_cookie")
+                    .get("https://playground.learnqa.ru/ajax/api/check_auth_cookie")
                     .then()
                     .contentType(ContentType.HTML)
                     .extract()
@@ -134,7 +133,7 @@ public class HomeWork {
             String correctAnswer = "You are authorized";
             if(yourAnswer.equalsIgnoreCase(correctAnswer)){
                 System.out.println(seasons[i]);
-                System.out.println(yourAnswer+"FFFFFF");
+                System.out.println("Your password " + yourAnswer);
                 break;
             }
 
