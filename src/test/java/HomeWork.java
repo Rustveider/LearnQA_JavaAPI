@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomeWork {
@@ -148,5 +149,17 @@ public class HomeWork {
                         .prettyPrint();
                 assertTrue(responseForCheck.length() > 15, "message is shorter then 15");
             }
+    @Test
+    public void HomeWorkEleven(){
+
+        Response response = RestAssured
+                .get(" https://playground.learnqa.ru/api/homework_cookie")
+                .andReturn();
+        Map<String,String> responseCookies = response.getCookies();
+        System.out.println(responseCookies);
+
+        assertEquals(200, response.statusCode(), "Unexpected status code");
+        assertTrue(responseCookies.containsKey("HomeWork"),"Response doesn't have 'HomeWork' cookie");
         }
+}
 
