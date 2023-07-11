@@ -1,6 +1,7 @@
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
+import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
@@ -153,7 +154,7 @@ public class HomeWork {
     public void HomeWorkEleven(){
 
         Response response = RestAssured
-                .get(" https://playground.learnqa.ru/api/homework_cookie")
+                .get("https://playground.learnqa.ru/api/homework_cookie")
                 .andReturn();
         Map<String,String> responseCookies = response.getCookies();
         System.out.println(responseCookies);
@@ -161,5 +162,17 @@ public class HomeWork {
         assertEquals(200, response.statusCode(), "Unexpected status code");
         assertTrue(responseCookies.containsKey("HomeWork"),"Response doesn't have 'HomeWork' cookie");
         }
+    @Test
+    public void HomeWorkTwelve(){
+
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/homework_header")
+                .andReturn();
+        Headers responseHeaders = response.getHeaders();
+        System.out.println(responseHeaders);
+
+        assertEquals(200, response.statusCode(), "Unexpected status code");
+        assertTrue(responseHeaders.hasHeaderWithName("x-secret-homework-header"),"Response doesn't have 'HomeWork' headers");
+    }
 }
 
